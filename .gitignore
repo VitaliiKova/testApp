@@ -1,0 +1,15 @@
+# Coverage reports
+coverage
+
+# API keys and secrets
+.env
+
+# Dependency directory
+node_modules
+
+# Editors
+.idea
+*.iml
+
+# Ignore built ts files
+dist/**/*

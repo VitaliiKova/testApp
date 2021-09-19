@@ -1,0 +1,98 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Test Project API
+  description: Full API specification of Test Project
+servers:
+  - url: http://localhost:5000
+paths:
+  /repositories/{username}:
+    get:
+      summary: List all repositories
+      operationId: listRepositories
+      tags:
+        - repositories
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: The username of the github account
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of repositories
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Repos"
+        '404':
+          description: Account not found on github
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+        '406':
+          description: Unsupported Accept header
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error406"
+components:
+  schemas:
+    Repo:
+      type: object
+      required:
+        - repository_name
+        - owner_login
+        - branches
+      properties:
+        repository_name:
+          type: string
+        owner_login:
+          type: string
+        branches:
+          type: array
+          items:
+            $ref: "#/components/schemas/Branch"
+    Repos:
+      type: array
+      items:
+        $ref: "#/components/schemas/Repo"
+    Branch:
+      type: object
+      required:
+        - repository_name
+        - owner_login
+        - branches
+      properties:
+        name:
+          type: string
+        commit_sha:
+          type: string
+    Error404:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          default: 404
+        message:
+          type: string
+          default: Not Found
+    Error406:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          default: 406
+        message:
+          type: string
+          default: Unsupported Accept in header:application/xml. Must accept application/json
