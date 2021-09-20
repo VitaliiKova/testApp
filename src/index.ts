@@ -6,16 +6,15 @@ import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 const swaggerDocument = YAML.load(path.join(__dirname,'../../src/swagger/apiDoc.yaml'));
+import dotenv from 'dotenv';
 
-
+dotenv.config();
 const app = express();
-const port = 5000;
+const PORT = process.env.PORT;
 
 /** Logging */
 const logger = log4js.getLogger();
-logger.level = 'info';
-//const logger = log4js.getLogger();
-//app.use(log4js.connectLogger(logger, { level: 'info' } ))
+logger.level = process.env.LOG_LEVEL;
 
 app.use(bodyParser.json());
 
@@ -46,10 +45,11 @@ app.use('/', routes);
 /** Error handling */
 app.use((req, res, next) => {
     const error = new Error('not found');
+    logger.error(JSON.stringify(error.message));
     return res.status(404).json({
         status: 404,
         message: error.message
     });
 });
 
-app.listen(port, () => console.log(`Running on port ${port}`));
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));

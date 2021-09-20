@@ -2,11 +2,16 @@ import {Request, Response, NextFunction} from 'express';
 import axios, {AxiosResponse} from 'axios';
 import configs from '../configs/config';
 import gitHabService from '../services/githab';
+import log4js from "log4js";
+const logger = log4js.getLogger();
+logger.level = process.env.LOG_LEVEL;
 
 
 // getting all repositories
 export const getRepos = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        logger.info('Start getRepos in repositories controller');
+
         // check accept type in header
         if (configs.BAD_ACCEPT_TYPES.includes(req.headers.accept)) {
             return res.status(406).json({
@@ -14,7 +19,6 @@ export const getRepos = async (req: Request, res: Response, next: NextFunction) 
                 message: `Unsupported 'Accept' header: ${req.headers.accept}. Must accept 'application/json'`
             });
         }
-
 
         let result: object[] = [];
         // get the user name from the req.params
@@ -49,15 +53,18 @@ export const getRepos = async (req: Request, res: Response, next: NextFunction) 
             }
         }
 
+        logger.info('End getRepos in repositories controller');
         return res.status(200).json(result);
 
     } catch (error) {
         if (error && error.isAxiosError) {
+            logger.error(JSON.stringify(error.response));
             return res.status(error.response.status).json({
                 status: error.response.status,
                 message: error.response.statusText
             });
         } else {
+            logger.error(JSON.stringify(error.message));
             return res.status(400).json({
                 status: 400,
                 message: error.message
