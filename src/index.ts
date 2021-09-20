@@ -33,14 +33,12 @@ app.use((req, res, next) => {
 });
 
 /** Routes */
+app.get('/health', (req, res) => {
+    res.send('Healthy!');
+});
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', routes);
 
-/*app.get('/', (req, res) => {
-    logger.info('log4js log info');
-    logger.error('log4js log error');
-    res.send('Hello world!');
-});*/
 
 /** Error handling */
 app.use((req, res, next) => {
