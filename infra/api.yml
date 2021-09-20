@@ -62,8 +62,8 @@ Resources:
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299
-      HealthCheckIntervalSeconds: 10
-      HealthCheckPath: /stat
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: /health
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 10
@@ -87,6 +87,6 @@ Outputs:
 
   ApiEndpoint:
     Description: GitHub repos API Endpoint
-    Value: !Join ['', ['http://', !ImportValue DomainName, '/']]
+    Value: !Join ['', ['http://', !ImportValue DomainName, '/health']]
     Export:
       Name: 'ReposApiEndpoint'

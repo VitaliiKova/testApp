@@ -33,6 +33,9 @@ app.use((req, res, next) => {
 });
 
 /** Routes */
+app.get('/', (req, res) => {
+    res.send('Healthy!');
+});
 app.get('/health', (req, res) => {
     res.send('Healthy!');
 });
