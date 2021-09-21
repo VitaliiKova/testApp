@@ -62,5 +62,26 @@ To run Unit tests, run the following command in the terminal "npm run test:unit"
 ```bash
 npm run test:unit
 ```
+
+## Deploy
+
+You have to set proper value for the `AWS_REGION` and for the `AWS_ECR_REPOSITORY_DOMAIN_URI` variable in the `.env` file before deploy.
+After that run:
+```bash
+$ ./cloudformation-create-stacks.sh
+```
+
+To remove all AWS infrastructure run:
+```bash
+$ ./cloudformation-delete-stacks.sh
+```
+
+### Technologies and frameworks
+
+- [TypeScript](https://www.typescriptlang.org/)
+- [Jest](https://jestjs.io/)
+- [Swagger](https://swagger.io/)
+- [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
