@@ -28,7 +28,7 @@ describe('Unit tests for repos functions', () => {
     });
 
     it('makeReposToOutputFormat return success format with branches', async () => {
-        const result = await reposService.makeReposToOutputFormat( reposValid, mockData.validUserName, { Accept: mockData.headers.acceptValid });
+        const result = await reposService.makeReposToOutputFormat( reposValid, mockData.validUserName, { accept: mockData.headers.acceptValid });
         expect(result.length).toBeGreaterThan(0);
         // @ts-ignore
         expect(result[0].repository_name);

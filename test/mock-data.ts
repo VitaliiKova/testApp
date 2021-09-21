@@ -1,4 +1,3 @@
-import axios, {AxiosResponse} from "axios";
 
 export = {
     validUserName: 'octocat',
@@ -16,7 +15,7 @@ export = {
     headers: {
         acceptValid: '*/*',
         acceptInvalid: 'application/xml',
-        authorizationTokenValid: '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',
+        authorizationTokenValid: '',
         authorizationTokenInvalid: 'qwertyuiop'
     },
     repos: [
