@@ -7,9 +7,12 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
-    "test:unit": "jest --config=jest.config.js"
+    "test:all": "jest --config=jest.config.js",
+    "test:e2e": "jest --config=test/jest-e2e.config.js",
+    "test:int": "jest --config=test/jest-int.config.js",
+    "test:unit": "jest --config=test/jest-unit.config.js"
   },
-  "author": "",
+  "author": "Vitalii Koval",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^27.0.1",
@@ -22,6 +25,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/express": "^4.17.13",
+    "@types/node": "^16.9.4",
     "axios": "^0.21.4",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

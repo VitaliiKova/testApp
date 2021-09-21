@@ -1,6 +1,6 @@
 # Test backend project
 
-Test backend project contains API requests, swagger documentation, unit and integration tests. 
+Test backend project contains API requests, swagger documentation, e2e, unit and integration tests. 
 
 Technologies:
 - TypeScript as a language; 
@@ -8,7 +8,7 @@ Technologies:
 - Jest as test framework/runner;
 
 
-## How to run a project
+## How to run a project locally
 
 1) Download LTS version of [Node JS](https://nodejs.org/en/download/) from official site
 
@@ -30,19 +30,37 @@ On the swagger documentation page you can run routes in real time and observe th
 
 Basic requirements of the request:
 
-1) Given username and header “Accept: application/json”, you will get all github repositories for user, which are not forks and for each branch it’s name and last commit sha.
+1) The main request to get all the repositories is as follows: "http://localhost:5000/repositories/{accountType}/{userName}"
+2) Github API has a limit on the number of requests.
+   - For an unauthorized user - 60 per hour
+   - For an authorized user - 5000 per hour
+   
+    So you can send your OAuth2 token from your github account as {header “Authorization: #########”} to make authorized requests.
+    You can create your OAuth2 token by following the link https://github.com/settings/tokens
+3) You can get user or organization repositories, given into {accountType} parameter "users" or "orgs" 
+4) Given {accountType}, {userName}, {header “Accept: application/json”}, you will get all github repositories, which are not forks and for each branch it’s name and last commit sha.
+5) Given not existing github username, you will get 404 response
+6) Given {header “Accept: application/xml”}, you will get 406 response
 
-2) Given not existing github user, you will get 404 response
 
-3) Given header “Accept: application/xml”, you will get 406 response
-
-
-## Unit and Integration tests
+## E2E, Unit and Integration tests
 All the main functionality of the project is covered by tests.
-To run them, run the following command in the terminal "npm run test:unit"
+
+To run all tests with cover information, run the following command in the terminal "npm run test:all"
+```bash
+npm run test:all
+```
+To run E2E tests, run the following command in the terminal "npm run test:e2e"
+```bash
+npm run test:e2e
+```
+To run Integration tests, run the following command in the terminal "npm run test:int"
+```bash
+npm run test:int
+```
+To run Unit tests, run the following command in the terminal "npm run test:unit"
 ```bash
 npm run test:unit
 ```
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

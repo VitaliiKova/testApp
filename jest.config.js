@@ -5,6 +5,9 @@ module.exports = {
     collectCoverageFrom: [
         './src/**/*.ts'
     ],
+    coveragePathIgnorePatterns: [
+        "<rootDir>/src/index.ts",
+    ],
     coverageDirectory: '<rootDir>/test/coverage',
     testEnvironment: 'node',
     testMatch: ['**/*.test.ts'],

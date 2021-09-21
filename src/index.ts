@@ -5,8 +5,10 @@ import bodyParser from 'body-parser';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
-const swaggerDocument = YAML.load(path.join(__dirname,'../../src/swagger/apiDoc.yaml'));
+const swaggerDocument = YAML.load(path.join(__dirname,'../../src/swagger/api-doc.yaml'));
 import dotenv from 'dotenv';
+import {errorHandler} from './middleware/error';
+
 
 dotenv.config();
 const app = express();
@@ -32,9 +34,10 @@ app.use((req, res, next) => {
     next();
 });
 
+
 /** Routes */
 app.get('/', (req, res) => {
-    res.send('Healthy!');
+    res.send('Hello World!');
 });
 app.get('/health', (req, res) => {
     res.send('Healthy!');
@@ -42,15 +45,9 @@ app.get('/health', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', routes);
 
-
 /** Error handling */
-app.use((req, res, next) => {
-    const error = new Error('not found');
-    logger.error(JSON.stringify(error.message));
-    return res.status(404).json({
-        status: 404,
-        message: error.message
-    });
-});
+app.use(errorHandler);
+
+
 
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));

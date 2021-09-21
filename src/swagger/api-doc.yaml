@@ -6,19 +6,30 @@ info:
 servers:
   - url: http://localhost:5000
 paths:
-  /repositories/{username}:
+  /repositories/{accountType}/{userName}:
     get:
-      summary: List all repositories
+      summary: List of all repositories
       operationId: listRepositories
       tags:
         - repositories
       parameters:
-        - name: username
+        - name: accountType
           in: path
           required: true
-          description: The username of the github account
+          description: Type of github account. Can be "orgs" for an organization accounts and "users" for user accounts
           schema:
             type: string
+            enum:
+              - users
+              - orgs
+        - name: userName
+          in: path
+          required: true
+          description: The name for user or organization the github account
+          schema:
+            type: string
+      security:
+        - OAuth2token: []
       responses:
         '200':
           description: Array of repositories
@@ -38,7 +49,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error406"
+        '401':
+          description: Unauthorized error when provided invalid Authorization token in header
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
 components:
+  securitySchemes:
+    OAuth2token:
+      type: apiKey
+      in: header
+      name: Authorization
   schemas:
     Repo:
       type: object
@@ -96,3 +118,16 @@ components:
         message:
           type: string
           default: Unsupported Accept in header:application/xml. Must accept application/json
+    Error401:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          default: 401
+        message:
+          type: string
+          default: Unauthorized
