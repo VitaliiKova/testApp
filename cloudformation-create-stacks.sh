@@ -9,7 +9,7 @@ echo -e "${GREEN}Docker login${RESET}"
 aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${AWS_ECR_REPOSITORY_DOMAIN_URI}"
 
 echo -e "${GREEN}Create github-repos-api-repo stack${RESET}"
-aws ecr create-repository --repository-name github-repos-api-repo
+aws ecr create-repository --repository-name github-repos-api-demo
 
 echo -e "${GREEN}Build image and push${RESET}"
 docker build -t github-repos-api-demo .
