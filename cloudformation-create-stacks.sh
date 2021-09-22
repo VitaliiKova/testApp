@@ -35,7 +35,8 @@ aws cloudformation wait stack-create-complete --stack-name app-cluster
 
 aws cloudformation create-stack \
   --stack-name api \
-  --template-body file://cloudformation/api.yml
+  --template-body file://cloudformation/api.yml \
+  --parameters "ParameterKey=ImageUrl, ParameterValue=${AWS_ECR_REPOSITORY_DOMAIN_URI}/github-repos-api-demo:latest"
 aws cloudformation wait stack-create-complete --stack-name api
 
 echo -e "${GREEN}Public URL:${RESET}"
