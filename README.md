@@ -22,7 +22,7 @@ npm run start
 ```
 
 ## Usage API
-The test project allows you to make a request to get list with all github repositories for user by github user name, which are not forks.
+The test project allows you to make a request to get list with all github repositories for user or organization by github user name, which are not forks.
 
 To view the route and its input / output data, follow the link to the swagger documentation [http://localhost:5000/api-docs/](http://localhost:5000/api-docs/)
 

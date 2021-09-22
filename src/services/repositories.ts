@@ -16,6 +16,7 @@ async function makeReposToOutputFormat(allRepos: AxiosResponse, userName: string
             // filtering not fork repo
             if (oneRepo.fork === false && oneRepo.name) {
                 // get branches for repo
+                // in failed request case, we will catch it in common error handler
                 const branchesResult: AxiosResponse = await gitHubService.getGitHubRepoBranches(userName, oneRepo.name, headers);
                 let branches: object[] = [];
                 if (branchesResult && branchesResult.data && branchesResult.data.length) {
